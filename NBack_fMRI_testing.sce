@@ -61,12 +61,9 @@ int partic_text_size = parameter_manager.get_int("Participant text size");
 int cue_dur = parameter_manager.get_int("Cue duration");
 int lett_dur = parameter_manager.get_int("Letter duration");
 bool perf_cue = parameter_manager.get_bool("Enable cue");
-
-oper_text.set_caption(parameter_manager.get_string("Performing instructions"));
-oper_text.ALIGN_CENTER;
-oper_text.set_font_size(oper_text_size);
-oper_text.redraw();
-operator_trial.present();
+int max_responses = parameter_manager.get_int("Number of clicks to trial complete");
+int nol = parameter_manager.get_int("Number of letters");
+string end_text = parameter_manager.get_string("End text");
 
 sub string set_letter_val(string temp_val, array<string, 1> letter_arr)
 	# to disable double repetition
@@ -80,21 +77,48 @@ sub string set_letter_val(string temp_val, array<string, 1> letter_arr)
 		end;
 		return result;
 	end;
-
+	
 sub main
 	begin
-	letter.set_font_size(parameter_manager.get_int("Participant text size"));
-	main_pic.add_part(cross, 0, 0);
+	
+	oper_text.set_caption(parameter_manager.get_string("Performing instructions"));
+	oper_text.ALIGN_CENTER;
+	oper_text.set_font_size(oper_text_size);
+	oper_text.redraw();
+	operator_trial.present();
+	
+	letter.set_caption(parameter_manager.get_string("Participant instructions"));
+	letter.ALIGN_CENTER;
+	letter.set_font_size(oper_text_size);
+	letter.redraw();
+	main_pic.add_part(letter, 0, 0);
+	main_trial.set_type(main_trial.NTH_RESPONSE);
+	main_trial.set_max_responses(max_responses);
+	main_trial.set_duration(main_trial.FOREVER);
+	main_trial.present();
+	
+	main_trial.set_type(main_trial.FIXED);
+	main_pic.set_part(1, cross);
+	letter.set_font_size(partic_text_size);
 	string previous_letter = "";
 	string letter_val;
+	int lett_counter = 0;
 	bool stop_trigger = false;
 	loop until stop_trigger
 		begin
+			if stop_trigger then
+				break;
+			end;
 			if perf_cue then
 				main_trial.set_duration(cue_dur);
 				main_trial.present();
 			end;
 			letter_val = set_letter_val(previous_letter, letters);
+			oper_text.set_caption(letter_val);
+			oper_text.set_font_size(partic_text_size);
+			oper_text.redraw();
+			operator_trial.present();
+			
 			letter.set_caption(letter_val);
 			previous_letter = letter_val;
 			letter.redraw();
@@ -104,7 +128,22 @@ sub main
 			if perf_cue then
 				main_pic.set_part(1, cross);
 			end;
+			lett_counter = lett_counter + 1;
+			if (nol == lett_counter) then
+				stop_trigger = true;
+			end;
 		end;
+		
+		oper_text.set_font_size(oper_text_size);
+		oper_text.set_caption(end_text);
+		oper_text.redraw();
+		operator_trial.present();
+		letter.set_font_size(oper_text_size);
+		letter.set_caption(end_text);
+		letter.redraw();
+		main_pic.set_part(1, letter);
+		main_trial.set_duration(main_trial.FOREVER);
+		main_trial.present();
 	end;
 	
 main();

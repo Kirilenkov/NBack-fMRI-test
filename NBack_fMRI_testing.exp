@@ -130,6 +130,31 @@
 </dat>
 <id>8</id>
 </val>
+<val>
+<dat>
+<val>Нажмите кнопку джойстика
+3 раза</val>
+</dat>
+<id>9</id>
+</val>
+<val>
+<dat>
+<val>3</val>
+</dat>
+<id>10</id>
+</val>
+<val>
+<dat>
+<val>3</val>
+</dat>
+<id>11</id>
+</val>
+<val>
+<dat>
+<val>Тестовое предъявление завершено</val>
+</dat>
+<id>12</id>
+</val>
 </sd>
 <sid>-1</sid>
 </ss>
@@ -150,6 +175,10 @@
 <pid>6</pid>
 <pid>7</pid>
 <pid>8</pid>
+<pid>9</pid>
+<pid>10</pid>
+<pid>11</pid>
+<pid>12</pid>
 </pl>
 </grp>
 </grps>
@@ -280,6 +309,62 @@
 </set>
 <temp>0</temp>
 <type>string_array</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>9</id>
+<set>
+<desc></desc>
+<edit>1</edit>
+<name>Participant instructions</name>
+<set>
+<rest></rest>
+</set>
+<temp>0</temp>
+<type>string</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>10</id>
+<set>
+<desc>Количество нажатий для завершения трайла инструкции. При изменении данного параметра следует изменить значение параметра Participant instructions на соответствующее.</desc>
+<edit>1</edit>
+<name>Number of clicks to trial complete</name>
+<set>
+<rest></rest>
+</set>
+<temp>0</temp>
+<type>int</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>11</id>
+<set>
+<desc></desc>
+<edit>1</edit>
+<name>Number of letters</name>
+<set>
+<rest></rest>
+</set>
+<temp>0</temp>
+<type>int</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>12</id>
+<set>
+<desc></desc>
+<edit>1</edit>
+<name>End text</name>
+<set>
+<rest></rest>
+</set>
+<temp>0</temp>
+<type>string</type>
 <vis>1</vis>
 </set>
 </parm>
